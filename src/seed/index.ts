@@ -4,6 +4,7 @@ import { createConnection, Repository } from 'typeorm'
 import * as bcryptjs from 'bcryptjs'
 import { db } from '../config'
 import { User, TagCategory } from '../models'
+import { promises } from 'fs';
 
 const hashedPassword = bcryptjs.hashSync('Ch4ngeme', 10)
 
@@ -40,8 +41,12 @@ const deleteData = async () => {
   console.log('BEGIN DELETE')
   const conn = await createConnection(db.typeOrmConfig)
   const userRepo: Repository<User> = conn.getRepository(User)
+  const tcRepo: Repository<TagCategory> = conn.getRepository(TagCategory)
 
-  await userRepo.clear()
+  await Promise.all([
+    userRepo.clear(),
+    tcRepo.clear()
+  ])
 
   await conn.close()
   console.log('END DELETE')
