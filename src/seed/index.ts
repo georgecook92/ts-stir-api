@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { createConnection, Repository } from 'typeorm'
 import * as bcryptjs from 'bcryptjs'
 import { db } from '../config'
-import User from '../models/User'
+import { User } from '../models'
 
 const hashedPassword = bcryptjs.hashSync('Ch4ngeme', 10)
 

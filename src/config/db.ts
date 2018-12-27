@@ -1,5 +1,5 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions'
-import User from '../models/User'
+import { User, TagCategory } from '../models'
 
 const typeOrmConfig: PostgresConnectionOptions = {
   type: "postgres",
@@ -11,7 +11,8 @@ const typeOrmConfig: PostgresConnectionOptions = {
   synchronize: true,
   logging: false,
   entities: [
-    User
+    User,
+    TagCategory
   ]
 }
 
