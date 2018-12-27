@@ -1,3 +1,0 @@
-import { deleteData } from "./"
-
-deleteData()

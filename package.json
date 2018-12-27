@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "seed-data": "yarn build && node dist/seed/seedData.js",
-    "delete-data": "yarn build && node dist/seed/deleteData.js"
+    "seed-data": "yarn build && node dist/seed/seedData.js"
   },
   "author": "",
   "license": "ISC",

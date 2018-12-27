@@ -55,20 +55,5 @@ const seedData = async () => {
   await conn.close()
 }
 
-const deleteData = async () => {
-  console.log('BEGIN DELETE')
-  const conn = await createConnection(db.typeOrmConfig)
-  const userRepo: Repository<User> = conn.getRepository(User)
-  const tcRepo: Repository<TagCategory> = conn.getRepository(TagCategory)
-
-  await Promise.all([
-    userRepo.clear(),
-    tcRepo.clear()
-  ])
-
-  await conn.close()
-  console.log('END DELETE')
-}
-
-export { seedData, deleteData }
+export { seedData }
 
