@@ -1,32 +1,32 @@
 import {
   Column,
   Entity,
+  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
-  PrimaryColumn
+  ManyToOne,
+  JoinColumn
 } from 'typeorm'
-import * as uuid from 'uuid/v4'
-import { Tag } from '.';
+import { TagCategory } from './'
 
 @Entity()
-export default class TagCategory {
+export default class Tag {
 
-    constructor (data: TagCategory) {
+    constructor (data: Tag) {
       if (data) {
         this.title = data.title
-        this.id = data.id || uuid()
       }
     }
 
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn("uuid")
     id?: string;
 
     @Column()
     title: string;
 
-    @OneToMany(type => Tag, tag => tag.tagCategory)
-    tags?: Tag[]
+    @ManyToOne(type => TagCategory, tagCategory => tagCategory.tags)
+    @JoinColumn()
+    tagCategory: TagCategory;
 
     @CreateDateColumn()
     createdAt?: Date
