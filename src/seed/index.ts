@@ -5,8 +5,9 @@ import * as bcryptjs from 'bcryptjs'
 import * as uuid from 'uuid/v4'
 import { db } from '../config'
 import { User, TagCategory, Tag } from '../models'
+import { password } from '../util'
 
-const hashedPassword = bcryptjs.hashSync('Ch4ngeme', 10)
+const hashedPassword = password.hashPassword('Ch4ngeme!')
 
 const users: User[] = [
   { firstName: 'George', lastName: 'Cook', email: 'georgecook406@gmail.com', password: hashedPassword },
