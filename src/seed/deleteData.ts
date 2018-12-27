@@ -1,0 +1,3 @@
+import { deleteData } from "./"
+
+deleteData()

@@ -17,7 +17,8 @@
     "experimentalDecorators": true,
     "lib": [
         "es6"
-    ]
+    ],
+    "strictNullChecks": true
 },
 "include": [
     "src/**/*"

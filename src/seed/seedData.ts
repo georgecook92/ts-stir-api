@@ -1,0 +1,3 @@
+import { seedData } from "./"
+
+seedData()

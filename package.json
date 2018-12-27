@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "seed-data": "yarn build && node dist/seed/seedData.js",
+    "delete-data": "yarn build && node dist/seed/deleteData.js"
   },
   "author": "",
   "license": "ISC",

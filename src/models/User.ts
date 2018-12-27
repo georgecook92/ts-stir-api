@@ -8,8 +8,18 @@ import {
 
 @Entity()
 export default class User {
+
+    constructor (data: User) {
+      if (data) {
+        this.firstName = data.firstName
+        this.lastName = data.lastName
+        this.email = data.email
+        this.password = data.password
+      }
+    }
+
     @PrimaryGeneratedColumn("uuid")
-    id: string;
+    id?: string;
 
     @Column()
     firstName: string;
@@ -17,15 +27,17 @@ export default class User {
     @Column()
     lastName: string;
 
-    @Column()
+    @Column({
+      unique: true
+    })
     email: string;
 
     @Column()
     password: string;
 
     @CreateDateColumn()
-    createdAt: Date
+    createdAt?: Date
 
     @UpdateDateColumn()
-    updatedAt: Date
+    updatedAt?: Date
 }
