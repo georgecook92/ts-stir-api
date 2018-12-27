@@ -1,4 +1,5 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions'
+import User from '../models/User'
 
 const typeOrmConfig: PostgresConnectionOptions = {
   type: "postgres",
@@ -8,7 +9,10 @@ const typeOrmConfig: PostgresConnectionOptions = {
   password: "",
   database: "stir",
   synchronize: true,
-  logging: false
+  logging: false,
+  entities: [
+    User
+  ]
 }
 
 export { typeOrmConfig }
