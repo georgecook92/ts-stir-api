@@ -10,3 +10,5 @@ const typeOrmConfig: PostgresConnectionOptions = {
   synchronize: true,
   logging: false
 }
+
+export { typeOrmConfig }
