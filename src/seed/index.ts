@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { createConnection, Repository } from 'typeorm'
 import * as bcryptjs from 'bcryptjs'
 import { db } from '../config'
-import { User } from '../models'
+import { User, TagCategory } from '../models'
 
 const hashedPassword = bcryptjs.hashSync('Ch4ngeme', 10)
 
@@ -12,17 +12,21 @@ const users: User[] = [
   { firstName: 'Rhea', lastName: 'Chowdhury', email: 'eahrc94@gmail.com', password: hashedPassword }
 ]
 
+const tagCategories: TagCategory[] = [
+  { title: 'Cuisine' },
+  { title: 'Meal Course' }
+]
+
+
 const seedData = async () => {
   console.log('BEGIN SEED')
   const conn = await createConnection(db.typeOrmConfig)
   const userRepo: Repository<User> = conn.getRepository(User)
+  const tcRepo: Repository<TagCategory> = conn.getRepository(TagCategory)
   try {
-    const userPromises: Promise<User>[] = users.map(userObj => {
-      return userRepo.save(userObj)
-    })
-    
-    await Promise.all(userPromises)
-  
+    const userPromises: Promise<User>[] = users.map(userObj => userRepo.save(userObj))
+    const tcPromises: Promise<TagCategory>[] = tagCategories.map(tcObj => tcRepo.save(tcObj))
+    await Promise.all([].concat.apply([], [userPromises, tcPromises]))
     await conn.close()
     console.log('END SEED')
   } catch (error) {
