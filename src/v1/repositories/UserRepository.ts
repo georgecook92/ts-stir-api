@@ -9,5 +9,4 @@ export default class UserRepository extends Repository<User> {
     if (!user) return false
     return passwordUtil.comparePassword(password, user.password)
   }
-
 }

@@ -2,15 +2,16 @@ import { Request, Response } from 'express'
 import { getCustomRepository } from 'typeorm'
 import * as joi from 'joi'
 
-import { LoginType, RegisterType, RegisterJoiTypes } from './types'
+import { LoginType, RegisterType } from './types'
 import { isLeft } from 'fp-ts/lib/Either'
 
 import UserRepository from '../../repositories/UserRepository'
-import { jwt } from '../../../util'
+import { jwt, password as passwordUtil } from '../../../util'
 import { User } from '../../../models'
+import { RequestWithUserId } from '../../../types'
 
 class AuthController {
-  login = async (req: Request, res: Response) => {
+  login = async (req: RequestWithUserId, res: Response) => {
     const result = LoginType.decode(req.body)
     
     if (isLeft(result)) {
@@ -31,17 +32,17 @@ class AuthController {
 
   register = async (req: Request, res: Response) => {
     const result = RegisterType.decode(req.body)
-    const joiResult = joi.validate(req.body, RegisterJoiTypes)
 
-    if (isLeft(result) || joiResult.error) {
+    if (isLeft(result)) {
       res.status(400).json({ error: 'Invalid request body' })
     } else {
       const userRepo = getCustomRepository(UserRepository)
-      await userRepo.save(new User(result.value))
 
-      return { success: true }
+      await userRepo.save(new User({ ...result.value, password: passwordUtil.hashPassword(result.value.password) }))
+
+      res.json({ success: true })
     }
   }
 }
 
-export default AuthController
+export default new AuthController()

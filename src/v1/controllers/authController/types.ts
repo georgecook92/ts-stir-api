@@ -1,5 +1,23 @@
 import * as t from "io-ts"
-import * as joi from 'joi'
+import * as Joi from 'joi'
+
+const EmailDecoder = new t.Type<string, string, string>(
+    // name
+    'EmailDecoder',
+    // is
+    t.string.is,
+    // validate
+    (s, c) => {
+        const validation = Joi.validate(s, Joi.string().email().required())
+        if (validation.error) {
+            return t.failure(s, c)
+        } else {
+            return t.success(s)
+        }
+    },
+    // encode  
+    String
+)
 
 export const LoginType = t.interface({
     email: t.string,
@@ -9,13 +27,6 @@ export const LoginType = t.interface({
 export const RegisterType = t.interface({
     firstName: t.string,
     lastName: t.string,
-    email: t.string,
+    email: EmailDecoder,
     password: t.string
-})
-
-export const RegisterJoiTypes = joi.object({
-    firstName: joi.string().required(),
-    lastName: joi.string().required(),
-    email: joi.string().email().required(),
-    password: joi.string().required(),
 })
